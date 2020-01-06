@@ -1,9 +1,5 @@
 from collections import defaultdict
 
-import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
-
 with open("input.txt") as f:
     inp = [int(x) for x in f.read().strip().split(",")]
 

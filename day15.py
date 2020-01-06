@@ -87,23 +87,23 @@ class Robot:
         print(max_val)
         exit()
 
-    def move_command(self):
-        # self.display()
-        self.update_dist_grid()
-        # for row in self.dist_grid:
-        #    print(row)
-        # print("".join(str(x) for x in row))
-        # move = int(input())
-        best_move = -1
-        lowest_val = 1000
-        for move, (dr, dc) in d_map.items():
-            val = self.dist_grid[self.x + dr][self.y + dc]
-            if val < lowest_val:
-                lowest_val = val
-                best_move = move
-        move = best_move
-        if move == -1:
-            self.final()
+    def move_command(self, manual=False):
+        if manual:
+            self.display()
+            move = int(input())
+        else:
+            self.display()
+            self.update_dist_grid()
+            best_move = -1
+            lowest_val = 1000
+            for move, (dr, dc) in d_map.items():
+                val = self.dist_grid[self.x + dr][self.y + dc]
+                if val < lowest_val:
+                    lowest_val = val
+                    best_move = move
+            move = best_move
+            if move == -1:
+                self.final()
         self.last_move = move
         return move
 
