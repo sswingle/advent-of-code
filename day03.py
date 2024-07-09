@@ -1,6 +1,7 @@
-# Read the input file and parse the wire paths
-with open("input.txt") as f:
-    wire_paths = [[(s[0], int(s[1:])) for s in l.split(",")] for l in f.readlines()]
+# Function to read the input file and parse the wire paths
+def read_input(file_path):
+    with open(file_path) as f:
+        return [[(s[0], int(s[1:])) for s in l.split(",")] for l in f.readlines()]
 
 # Function to calculate the steps taken to each point in the path
 def calculate_steps(path):
@@ -23,6 +24,7 @@ def calculate_steps(path):
     return step_dict
 
 def main():
+    wire_paths = read_input("input.txt")
     # Create dictionaries of steps for each wire path
     wire1_steps, wire2_steps = [calculate_steps(p) for p in wire_paths]
     min_dist = float("inf")
