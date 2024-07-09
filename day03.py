@@ -1,11 +1,14 @@
-with open("input.txt") as f:
-    paths = [[(s[0], int(s[1:])) for s in l.split(",")] for l in f.readlines()]
+# Function to read the input file and parse the wire paths
+def read_input(file_path):
+    with open(file_path) as f:
+        return [[(s[0], int(s[1:])) for s in l.split(",")] for l in f.readlines()]
 
-
-def get_step_dict(path):
-    steps = 0
-    step_dict = {}
+# Function to calculate the steps taken to each point in the path
+def calculate_steps(path):
+    total_steps = 0
+    steps_dict = {}
     x, y = 0, 0
+    # Loop over each direction and number of steps
     for d, n in path:
         for _ in range(n):
             if d == "R":
@@ -20,13 +23,20 @@ def get_step_dict(path):
             step_dict[(x, y)] = steps
     return step_dict
 
+def main():
+    wire_paths = read_input("input.txt")
+    # Create dictionaries of steps for each wire path
+    wire1_steps, wire2_steps = [calculate_steps(p) for p in wire_paths]
+    min_dist = float("inf")
+    min_steps = float("inf")
+    # Calculate the minimum distance and steps to the intersection
+    for intersection in wire1_steps.keys() & wire2_steps.keys():
+        min_dist = min(abs(intersection[0]) + abs(intersection[1]), min_dist)
+        min_steps = min(wire1_steps[intersection] + wire2_steps[intersection], min_steps)
 
-dict1, dict2 = [get_step_dict(p) for p in paths]
-min_dist = float("inf")
-min_steps = float("inf")
-for pos in dict1.keys() & dict2.keys():
-    min_dist = min(abs(pos[0]) + abs(pos[1]), min_dist)
-    min_steps = min(dict1[pos] + dict2[pos], min_steps)
+    # Print the results
+    print(min_dist)
+    print(min_steps)
 
-print(min_dist)
-print(min_steps)
+if __name__ == "__main__":
+    main()
