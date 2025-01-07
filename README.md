@@ -9,14 +9,32 @@ Solutions are organized by day, with each solution in its own Python file:
 - `day02.py` contains solutions for Day 2
 - etc.
 
+Some days might have multiple solution files (e.g., `day18.py` and `day18b.py`) representing different approaches or iterations of the solution.
+
 Each solution file typically contains code for both Part 1 and Part 2 of that day's challenge.
+
+## Dependencies
+
+The solutions use various Python libraries including:
+- Standard libraries:
+  - `heapq`
+  - `itertools`
+- Third-party libraries:
+  - `networkx`
+  - `more_itertools`
+
+To install the required third-party libraries:
+```bash
+pip install networkx more-itertools
+```
 
 ## Running the Solutions
 
 1. Make sure you have Python installed
-2. Download your puzzle input from the Advent of Code website
-3. Save your input as `input.txt` in the same directory as the solution
-4. Run the solution for a specific day:
+2. Install the required dependencies
+3. Download your puzzle input from the Advent of Code website
+4. Save your input as `input.txt` in the same directory as the solution
+5. Run the solution for a specific day:
    ```bash
    python dayXX.py
    ```
@@ -25,6 +43,13 @@ Each solution file typically contains code for both Part 1 and Part 2 of that da
 ## Input Files
 
 Each puzzle requires a personal input file that you can get from the Advent of Code website. These input files are not included in this repository as they are unique to each participant. Save your input as `input.txt` in the same directory as the solution you want to run.
+
+## Solution Complexity
+
+The solutions vary in complexity:
+- Earlier days (like Day 1) tend to be straightforward and use basic Python features
+- Later days often involve more complex algorithms and data structures, using libraries like `networkx` for graph problems
+- Some days have multiple solution attempts or optimizations (e.g., Day 18)
 
 ## About Advent of Code
 
