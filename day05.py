@@ -1,55 +1,12 @@
-with open("input.txt") as f:
-    inp = [int(x) for x in f.read().split(",")]
+from utils import read_input_int_csv, IntcodeComputer
 
+# Read program from input file
+program = read_input_int_csv(5)
 
-def run(p):
-    def get(offset):
-        mode = (instruction // 10 ** (1 + offset)) % 10
-        if mode == 0:
-            return p[index + offset]
-        elif mode == 1:
-            return index + offset
-        else:
-            assert False, f"invalid mode: {mode}"
+# Create computer instance
+computer = IntcodeComputer(program)
 
-    index = 0
-    while True:
-        instruction = p[index]
-        opcode = instruction % 100
-
-        if opcode == 1:  # add
-            p[get(3)] = p[get(1)] + p[get(2)]
-            index += 4
-        elif opcode == 2:  # mult
-            p[get(3)] = p[get(1)] * p[get(2)]
-            index += 4
-        elif opcode == 3:  # input
-            p[get(1)] = int(input("enter: "))
-            index += 2
-        elif opcode == 4:  # output
-            print(f"output: {p[get(1)]}")
-            index += 2
-        elif opcode == 5:  # jump nonzero
-            if p[get(1)] != 0:
-                index = p[get(2)]
-            else:
-                index += 3
-        elif opcode == 6:  # jump zero
-            if p[get(1)] == 0:
-                index = p[get(2)]
-            else:
-                index += 3
-        elif opcode == 7:  # less than
-            p[get(3)] = int(p[get(1)] < p[get(2)])
-            index += 4
-        elif opcode == 8:  # equals
-            p[get(3)] = int(p[get(1)] == p[get(2)])
-            index += 4
-        elif opcode == 99:  # halt
-            print("halt")
-            break
-        else:
-            assert False, f"invalid opcode: {opcode}"
-
-
-run(inp)
+# Run program with input 1 for part 1
+# The computer will print outputs as it runs
+outputs = computer.run([1])
+print("Final outputs:", outputs)
