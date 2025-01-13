@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import List, Union, Dict, Tuple
 from collections import Counter
@@ -6,8 +7,9 @@ from collections import Counter
 def read_input_lines(day: int) -> List[str]:
     """Read input.txt for given day and return list of lines"""
     day_str = str(day).zfill(2)
-    with open(f"input/day{day_str}.txt") as f:
-        return f.readlines()
+    input_path = os.getenv("AOC_INPUT_PATH", f"input/day{day_str}.txt")
+    with open(input_path) as f:
+        return [line.strip() for line in f.readlines()]
 
 
 def read_input_ints(day: int) -> List[int]:

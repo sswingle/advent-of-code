@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -6,34 +5,52 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 import pytest
-from day01 import calculate_fuel, calculate_total_fuel
+from day01 import calculate_frequency
 
 
-def test_calculate_fuel():
-    assert calculate_fuel(12) == 2
-    assert calculate_fuel(14) == 2
-    assert calculate_fuel(1969) == 654
-    assert calculate_fuel(100756) == 33583
-
-
-def test_calculate_total_fuel():
-    assert calculate_total_fuel(14) == 2
-    assert calculate_total_fuel(1969) == 966
-    assert calculate_total_fuel(100756) == 50346
+def test_calculate_frequency():
+    """Test frequency calculation with example cases from the problem"""
+    # Test case 1: +1, -2, +3, +1 = 3
+    assert calculate_frequency(["+1", "-2", "+3", "+1"]) == 3
+    
+    # Test case 2: +1, +1, +1 = 3
+    assert calculate_frequency(["+1", "+1", "+1"]) == 3
+    
+    # Test case 3: +1, +1, -2 = 0
+    assert calculate_frequency(["+1", "+1", "-2"]) == 0
+    
+    # Test case 4: -1, -2, -3 = -6
+    assert calculate_frequency(["-1", "-2", "-3"]) == -6
 
 
 def test_with_input_file(tmp_path):
+    """Test with a small input file"""
     # Create a temporary input file
     input_file = tmp_path / "input.txt"
-    input_file.write_text("12\n1969\n")
+    input_file.write_text("+1\n-2\n+3\n+1\n")
+    
+    # Run main and capture output
+    import day01
+    from io import StringIO
+    import sys
+    
+    # Redirect stdout to capture output
+    old_stdout = sys.stdout
+    sys.stdout = mystdout = StringIO()
     
     # Temporarily set the input file path
+    import os
     os.environ["AOC_INPUT_PATH"] = str(input_file)
     
-    # Import the module again to use the new input file
-    import importlib
-    import day01
-    importlib.reload(day01)
+    # Run main
+    day01.main()
+    
+    # Get output and restore stdout
+    output = mystdout.getvalue()
+    sys.stdout = old_stdout
+    
+    # Verify output
+    assert "Final frequency: 3" in output
     
     # Clean up
     del os.environ["AOC_INPUT_PATH"]
