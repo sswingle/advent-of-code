@@ -1,5 +1,6 @@
-with open("input.txt") as f:
-    masses = [int(l) for l in f.readlines()]
+from utils import read_input_ints
+
+masses = read_input_ints(1)
 
 # part 1
 print(sum(m // 3 - 2 for m in masses))

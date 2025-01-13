@@ -1,30 +1,22 @@
-with open("input.txt") as f:
-    inp = [int(x) for x in f.read().split(",")]
+from utils import read_input_int_csv, IntcodeComputer
 
 
-def run(ints, a, b):
-    ints = list(ints)
-    ints[1] = a
-    ints[2] = b
-    for i in range(0, len(ints), 4):
-        op, a, b, c = ints[i : i + 4]
-        if op == 1:
-            ints[c] = ints[a] + ints[b]
-        elif op == 2:
-            ints[c] = ints[a] * ints[b]
-        elif op == 99:
-            break
-        else:
-            assert False
-    return ints[0]
+def run_with_inputs(program, noun, verb):
+    computer = IntcodeComputer(program)
+    computer.memory[1] = noun
+    computer.memory[2] = verb
+    computer.run()
+    return computer.memory[0]
 
+
+program = read_input_int_csv(2)
 
 # part 1
-print(run(inp, 12, 2))
+print(run_with_inputs(program, 12, 2))
 
 # part 2
-for a in range(100):
-    for b in range(100):
-        out = run(list(inp), a, b)
-        if out == 19690720:
-            print(a, b)
+for noun in range(100):
+    for verb in range(100):
+        if run_with_inputs(program, noun, verb) == 19690720:
+            print(noun, verb)
+            break
