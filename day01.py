@@ -17,13 +17,37 @@ def calculate_frequency(changes: list[str]) -> int:
     return frequency
 
 
+def find_first_repeat(changes: list[str]) -> int:
+    """Find the first frequency that's reached twice.
+    
+    Args:
+        changes: List of strings with format "+N" or "-N" where N is an integer
+        
+    Returns:
+        The first frequency that's reached twice
+    """
+    seen = {0}  # Set of frequencies we've seen, starting with 0
+    frequency = 0
+    
+    while True:  # Keep repeating the list until we find a duplicate
+        for change in changes:
+            frequency += int(change)
+            if frequency in seen:
+                return frequency
+            seen.add(frequency)
+
+
 def main():
     # Read frequency changes from input file
     changes = read_input_lines(1)
     
-    # Calculate final frequency (Part 1)
+    # Part 1: Calculate final frequency
     final_frequency = calculate_frequency(changes)
-    print(f"Final frequency: {final_frequency}")
+    print(f"Part 1 - Final frequency: {final_frequency}")
+    
+    # Part 2: Find first repeated frequency
+    first_repeat = find_first_repeat(changes)
+    print(f"Part 2 - First repeated frequency: {first_repeat}")
 
 
 if __name__ == "__main__":
